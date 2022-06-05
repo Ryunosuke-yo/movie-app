@@ -1,4 +1,4 @@
-import React, {useContext, useCallback} from "react"
+import React, {useContext, useCallback, useState} from "react"
 import MovieWrapper from "../../elements/MovieWrapper"
 import { Center, ScrollView } from "native-base"
 import Picker from "../../elements/Picker"
@@ -10,6 +10,17 @@ import SearchInput from "../../elements/SearchInput"
 
 export default function(){
     const {movies, moviesToGet, setMovies} = useContext(MovieContext)
+    const [inpValue, setInpValue ]= useState()
+    const [selectValue, setSelectValue] = useState("movies")
+    const handleInp = t=>{
+        setInpValue(t)
+    }
+
+    const onSubmit = ()=>{
+        console.log(inpValue, selectValue)
+    }
+
+    const props = {inpValue, handleInp, onSubmit, selectValue, setSelectValue}
 
     // useFocusEffect(
     //     useCallback(() => {
@@ -29,7 +40,7 @@ export default function(){
 
     return (
         <Center>
-            <SearchInput />
+            <SearchInput props={props}/>
             <ScrollView>
                 {mapMovies}
             </ScrollView>

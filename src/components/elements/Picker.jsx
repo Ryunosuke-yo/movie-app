@@ -12,6 +12,8 @@ export default function({genre, screen}){
         screen == "movies" ? setMoviesToGet(v) : setTvShowsToGet(v)
     }
 
+    
+
     const selected = {
         backgroundColor : "green.600",
         endIcon: <CheckIcon size="5" color="white"/>,
