@@ -1,4 +1,4 @@
-import React,  {useEffect, useState, createContext} from "react";
+import React,  {useEffect, useState, createContext, useReducer} from "react";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from "@react-navigation/native";
 import AppTabStack from "./AppTabStack";
@@ -8,15 +8,38 @@ import { MovieContext } from "../Context/movieContext";
 
 const Stack = createNativeStackNavigator();
 
+const initialState = {
+    movies : [],
+    moviesToGet : "popular",
+    tvShowsToGet : "popular",
+    id : 0,
+    selectedItem : {},
+    isLoading : true,
+    slicedMovies : {}
+}
+
+const reducer = (state, action)=>{
+    switch(action.type){
+        case "MOVIES" :
+            return {...state, movies : action.movies, }
+        case "MOVIESTOGET" :
+            return {...state, moviesToGet : action.moviesToGet}
+        case "TVSHOWSTOGET" :
+            return {...state, tvShowsToGet : action.tvShowsToGet}
+        case "ID" :
+            return {...state, id : action.id}
+        case "SELECTEDITEM" : 
+            return {...state, selectedItem : action.selectedItem}
+        case "ISLOADING" : 
+            return {...state, isLoading : false}
+        case "SLICEMOVIE" : 
+            return {...state, slicedMovies : action.slicedMovies}
+    }
+}
+
 export default function(){
-    const [movies, setMovies] = useState()
-    const [moviesToGet, setMoviesToGet] = useState("popular")
-
-    const [tvSHows, setTvShows] = useState()
-    const [tvShowsToGet, setTvShowsToGet] = useState("popular")
-
-    
-    const contextValue = {movies, setMovies, setMoviesToGet, moviesToGet, tvShowsToGet, setTvShowsToGet}
+    const [state, dispatch] = useReducer(reducer, initialState)    
+    const contextValue = {dispatch, state}
 
     const option = {
         headerStyle : {

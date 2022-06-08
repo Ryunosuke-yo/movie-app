@@ -23,7 +23,7 @@ export default function({props}){
                 <FormControl.Label isRequired>Choose Search Type</FormControl.Label>
                 <HStack space={4} alignItems="center">
                     <Select width={200} defaultValue="movies" onValueChange={(v)=>setSelectValue(v)} selectedValue={selectValue} _selectedItem={selected}>
-                        <Select.Item label="movies" value="movies" _text={selectValue == "movies" ? {color : "white"} : null}/>
+                        <Select.Item label="movies" value="movie" _text={selectValue == "movies" ? {color : "white"} : null}/>
                         <Select.Item label="multi" value="multi" _text={selectValue == "multi" ? {color : "white"} : null} />
                         <Select.Item label="tv" value="tv" _text={selectValue == "tv" ? {color : "white"} : null}/>
                     </Select>

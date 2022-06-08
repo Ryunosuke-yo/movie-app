@@ -8,19 +8,21 @@ import axios from "axios"
 import MovieRender from "../../elements/MovieRender"
 import { tvGenre } from "../../genre"
 import Loading from "../../loading/Loading"
+import ApiKey from "../../ApiKey"
 
 export default function(){
-    const {movies, moviesToGet, setMovies, tvShowsToGet} = useContext(MovieContext)
-    const [isLoading, setIsLoading] = useState(true)
+    const {dispatch, state} = useContext(MovieContext)
+    const {movies, tvShowsToGet, isLoading} = state
     
 
     useFocusEffect(
         useCallback(() => {
             const getPopular = async ()=>{
-                const res = await axios.get(`https://api.themoviedb.org/3/tv/${tvShowsToGet}?api_key=27a32fa020f15e8bb320562600a826c6&language=en-US&page=1`)
-                setMovies(res.data.results)
+                const res = await axios.get(`https://api.themoviedb.org/3/tv/${tvShowsToGet}?api_key=${ApiKey}&language=en-US&page=1`)
+                // setMovies(res.data.results)
+                dispatch({type : "MOVIES", movies : res.data.results})
+                dispatch({type : "ISLOADING", isLoading : false})
                 // console.log(res.data)
-                setIsLoading(false)
             }
             getPopular()
         }, [tvShowsToGet])
@@ -30,7 +32,7 @@ export default function(){
 
     
     
-    const mapMovies = movies?.map(movie=> <MovieWrapper movies={movie} key={movie.id} screen="tv"/>)
+    const mapMovies = movies?.map(movie=> <MovieWrapper movie={movie} key={movie.id} screen="tv"/>)
 
     return (
         <Center>

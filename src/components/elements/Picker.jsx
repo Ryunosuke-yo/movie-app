@@ -4,12 +4,17 @@ import { MovieContext } from "../Context/movieContext";
 
 
 export default function({genre, screen}){
-    const {setMoviesToGet, moviesToGet, tvShowsToGet, setTvShowsToGet} = useContext(MovieContext)
+    const {dispatch, state} = useContext(MovieContext)
+    const {moviesToGet, movies, tvShowsToGet} = state
 
-    const tvOrShows = screen == "movies" ? moviesToGet : tvShowsToGet
+    const tvOrShows = screen == "movie" ? moviesToGet : 
+                                screen == "tv" ? tvShowsToGet : 
+                                "popular"
 
     const setTvOrMovies = (v)=>{
-        screen == "movies" ? setMoviesToGet(v) : setTvShowsToGet(v)
+        screen == "movie" ? dispatch({type : "MOVIESTOGET", moviesToGet : v}) : 
+        screen == "tv" ? dispatch({type : "TVSHOWSTOGET", tvShowsToGet : v}) :
+        "popular"
     }
 
     

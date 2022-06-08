@@ -1,5 +1,5 @@
 import React, {useContext, useCallback, useState, useEffect} from "react"
-import { Center, ScrollView } from "native-base"
+import { Box, Button, Center, ScrollView} from "native-base"
 import MovieWrapper from "../../elements/MovieWrapper"
 import Picker from "../../elements/Picker"
 import { MovieContext } from "../../Context/movieContext"
@@ -8,35 +8,42 @@ import axios from "axios"
 import MovieRender from "../../elements/MovieRender"
 import { movieGenre } from "../../genre"
 import Loading from "../../loading/Loading"
+import ApiKey from "../../ApiKey"
 
 export default function(){
-    const {movies, moviesToGet, setMovies} = useContext(MovieContext)
-    const [isLoading, setIsLoading] = useState(true)
+    const {dispatch, state} = useContext(MovieContext)
+    const {moviesToGet, movies, isLoading, slicedMovies} = state
+
+    // const [slicedMovies, setSlicedMovies] = useState()
     
     
     useFocusEffect(
         useCallback(() => {
             const getPopular = async ()=>{
-                const res = await axios.get(`https://api.themoviedb.org/3/movie/${moviesToGet}?api_key=27a32fa020f15e8bb320562600a826c6&language=en-US&page=1`)
-                setMovies(res.data.results)
-                setIsLoading(false)
+                const res = await axios.get(`https://api.themoviedb.org/3/movie/${moviesToGet}?api_key=${ApiKey}&language=en-US&page=1`)
+                // setMovies(res.data.results)
+                dispatch({type : "MOVIES", movies : res.data.results})
+                dispatch({type : "ISLOADING", isLoading : false})                
                 // console.log(res.data)
             }
             getPopular()
+            // dispatch({type : "SLICEMOVIE", slicedMovies : movies.slice(0,10)})
+            // setSlicedMovies(movies.slice(0,10))
         }, [moviesToGet])
-    )
+        )
+        
+        const mapMovies = movies?.map(movie=> <MovieWrapper movie={movie} key={movie.id} screen="movie"/>)
    
-
-    
-    
-    const mapMovies = movies?.map(movie=> <MovieWrapper movies={movie} key={movie.id} screen="movies"/>)
-
+   
     return (
         <Center>
-            <Picker genre={movieGenre} screen="movies"/>
+            <Picker genre={movieGenre} screen="movie"/>
            { isLoading ? <Loading /> :
             <ScrollView>
+                <Box paddingBottom={16}>
                 {mapMovies}
+                {/* <Button>s</Button> */}
+                </Box>
             </ScrollView>
             }
         </Center>
