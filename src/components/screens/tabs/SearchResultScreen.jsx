@@ -13,15 +13,11 @@ export default function({navigation, route}){
     const {movies, moviesToGet, tvShowsToGet, isLoading} = state 
 
     const [inpValue, setInpValue ]= useState()
-    const [selectValue, setSelectValue] = useState("movie")
+    const [selectValue, setSelectValue] = useState("multi")
     const [showInitiateSearch, setShowInitiateSearch] = useState(true)
     const handleInp = t=>{
         setInpValue(t)
     }
-
-    useEffect(()=>{
-        console.log(route)
-    })
 
     const onSubmit = async ()=>{
         console.log(inpValue, selectValue)
@@ -32,12 +28,11 @@ export default function({navigation, route}){
         setInpValue("")
 
     }
+
+    useEffect(()=>{
+        setShowInitiateSearch(true)
+    },[])
     
-    useFocusEffect(
-        useCallback(() => {
-            setShowInitiateSearch(true)
-        }, [])
-    )
     const props = {inpValue, handleInp, onSubmit, selectValue, setSelectValue}
     
     const mapMovies = movies?.map(movie=> <MovieWrapper movie={movie} key={movie.id} screen={selectValue}/>)

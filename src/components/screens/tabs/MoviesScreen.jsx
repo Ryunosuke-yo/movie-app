@@ -12,7 +12,7 @@ import ApiKey from "../../ApiKey"
 
 export default function(){
     const {dispatch, state} = useContext(MovieContext)
-    const {moviesToGet, movies, isLoading, slicedMovies} = state
+    const {moviesToGet, movies, isLoading} = state
 
     // const [slicedMovies, setSlicedMovies] = useState()
     
@@ -27,8 +27,6 @@ export default function(){
                 // console.log(res.data)
             }
             getPopular()
-            // dispatch({type : "SLICEMOVIE", slicedMovies : movies.slice(0,10)})
-            // setSlicedMovies(movies.slice(0,10))
         }, [moviesToGet])
         )
         

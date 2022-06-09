@@ -12,10 +12,8 @@ const initialState = {
     movies : [],
     moviesToGet : "popular",
     tvShowsToGet : "popular",
-    id : 0,
     selectedItem : {},
     isLoading : true,
-    slicedMovies : {}
 }
 
 const reducer = (state, action)=>{
@@ -26,14 +24,10 @@ const reducer = (state, action)=>{
             return {...state, moviesToGet : action.moviesToGet}
         case "TVSHOWSTOGET" :
             return {...state, tvShowsToGet : action.tvShowsToGet}
-        case "ID" :
-            return {...state, id : action.id}
         case "SELECTEDITEM" : 
             return {...state, selectedItem : action.selectedItem}
         case "ISLOADING" : 
             return {...state, isLoading : false}
-        case "SLICEMOVIE" : 
-            return {...state, slicedMovies : action.slicedMovies}
     }
 }
 
