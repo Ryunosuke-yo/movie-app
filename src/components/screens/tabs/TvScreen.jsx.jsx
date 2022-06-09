@@ -5,7 +5,6 @@ import Picker from "../../elements/Picker"
 import { MovieContext } from "../../Context/movieContext"
 import { useFocusEffect } from '@react-navigation/native'
 import axios from "axios"
-import MovieRender from "../../elements/MovieRender"
 import { tvGenre } from "../../genre"
 import Loading from "../../loading/Loading"
 import ApiKey from "../../ApiKey"
